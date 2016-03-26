@@ -1,0 +1,38 @@
+<resources>
+    <string name="app_name">Math Alarm</string>
+
+    <string name="time_picker_title">Set Alarm Time:</string>
+
+    <string name="settings_time_title">Alarm Time</string>
+
+    <string name="settings_day_title">Set On</string>
+
+    <string name="settings_repeat_title">Repeat</string>
+    <string name="settings_repeat_text">Repeat Weekly</string>
+
+    <string name="menu_add_alarm">Add Alarm</string>
+    <string name="menu_settings_done">Set</string>
+    <string name="menu_settings_delete">Delete</string>
+
+    <string name="mon">MON</string>
+    <string name="tue">TUE</string>
+    <string name="wed">WED</string>
+    <string name="thu">THU</string>
+    <string name="fri">FRI</string>
+    <string name="sat">SAT</string>
+    <string name="sun">SUN</string>
+
+    <string name="zero">0</string>
+    <string name="one">1</string>
+    <string name="two">2</string>
+    <string name="three">3</string>
+    <string name="four">4</string>
+    <string name="five">5</string>
+    <string name="six">6</string>
+    <string name="seven">7</string>
+    <string name="eight">8</string>
+    <string name="nine">9</string>
+    <string name="set">OK</string>
+    <string name="delete">DEL</string>
+
+</resources>

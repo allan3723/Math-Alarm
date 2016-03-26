@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="15dp"
+            android:paddingBottom="5dp"
+            android:text="@string/settings_time_title"
+            style="?android:listSeparatorTextViewStyle"/>
+
+        <TextView
+            android:id="@+id/settings_time"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:textSize="50sp"
+            android:padding="30dp"
+            android:gravity="center"
+            tools:text="DISPLAY TIME HERE"
+            />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="15dp"
+            android:paddingBottom="5dp"
+            android:text="@string/settings_repeat_title"
+            style="?android:listSeparatorTextViewStyle"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:paddingTop="20dp"
+            android:paddingBottom="20dp"
+            android:orientation="horizontal">
+
+            <ToggleButton
+                android:id="@+id/set_repeat_sun"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_weight="1"
+                android:layout_marginRight="-4dp"
+                android:textColor="@color/toggle_color"
+                android:textOn="@string/sun"
+                android:textOff="@string/sun"/>
+
+            <ToggleButton
+                android:id="@+id/set_repeat_mon"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_weight="1"
+                android:layout_marginLeft="-4dp"
+                android:layout_marginRight="-4dp"
+                android:textColor="@color/toggle_color"
+                android:textOn="@string/mon"
+                android:textOff="@string/mon"/>
+
+            <ToggleButton
+                android:id="@+id/set_repeat_tue"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_weight="1"
+                android:layout_marginLeft="-4dp"
+                android:layout_marginRight="-4dp"
+                android:textColor="@color/toggle_color"
+                android:textOn="@string/tue"
+                android:textOff="@string/tue"/>
+
+            <ToggleButton
+                android:id="@+id/set_repeat_wed"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_weight="1"
+                android:layout_marginLeft="-4dp"
+                android:layout_marginRight="-4dp"
+                android:textColor="@color/toggle_color"
+                android:textOn="@string/wed"
+                android:textOff="@string/wed"/>
+
+            <ToggleButton
+                android:id="@+id/set_repeat_thu"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_weight="1"
+                android:layout_marginLeft="-4dp"
+                android:layout_marginRight="-4dp"
+                android:textColor="@color/toggle_color"
+                android:textOn="@string/thu"
+                android:textOff="@string/thu"/>
+
+            <ToggleButton
+                android:id="@+id/set_repeat_fri"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_weight="1"
+                android:layout_marginLeft="-4dp"
+                android:layout_marginRight="-4dp"
+                android:textColor="@color/toggle_color"
+                android:textOn="@string/fri"
+                android:textOff="@string/fri"/>
+
+            <ToggleButton
+                android:id="@+id/set_repeat_sat"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_weight="1"
+                android:layout_marginLeft="-4dp"
+                android:textColor="@color/toggle_color"
+                android:textOn="@string/sat"
+                android:textOff="@string/sat"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="start|center_vertical"
+                android:layout_marginLeft="10dp"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                android:layout_weight="1"
+                android:text="@string/settings_repeat_text"/>
+
+            <Switch
+                android:id="@+id/settings_repeat_switch"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_vertical|end"
+                android:layout_marginRight="20dp"
+                android:layout_weight="1"/>
+
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>
+
