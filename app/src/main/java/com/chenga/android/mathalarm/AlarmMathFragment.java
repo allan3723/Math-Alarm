@@ -18,6 +18,7 @@ import android.widget.Toast;
 import java.io.IOException;
 import java.util.Calendar;
 import java.util.Random;
+import java.util.UUID;
 
 public class AlarmMathFragment extends Fragment {
 
@@ -64,6 +65,11 @@ public class AlarmMathFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup parent,
                              Bundle savedInstanceState) {
 
+        Bundle extra = getActivity().getIntent().getExtras();
+
+        UUID alarmId = (UUID) extra.get(Alarm.ALARM_EXTRA);
+        Alarm alarm = AlarmLab.get(getActivity()).getAlarm(alarmId);
+
         View v = inflater.inflate(R.layout.fragment_alarm_math, parent, false);
 
         Uri alarmUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
@@ -81,7 +87,8 @@ public class AlarmMathFragment extends Fragment {
             e.printStackTrace();
         }
 
-        getMathProblem();
+        getMathProblem(alarm.getDifficulty());
+        Log.d("Math Fragment", "Difficulty = "+ alarm.getDifficulty());
         sb = new StringBuilder("");
         Calendar cal = Calendar.getInstance();
 
@@ -174,7 +181,6 @@ public class AlarmMathFragment extends Fragment {
         mSetButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d("Alarm", sb + " != " + ans);
                 if (Integer.parseInt(sb.toString()) != ans) {
                     Toast.makeText(getActivity(), "Incorrect!", Toast.LENGTH_SHORT).show();
                     sb.setLength(0);
@@ -199,20 +205,42 @@ public class AlarmMathFragment extends Fragment {
         return v;
     }
 
-    private void getMathProblem() {
+    private void getMathProblem(int difficulty) {
         Random random = new Random();
 
         op = random.nextInt(4);
+        int add1, add2, mult1, mult2;
+
+        switch(difficulty) {
+            case Alarm.EASY:
+                add1 = 90;
+                add2 = 10;
+                mult1 = 10;
+                mult2 = 3;
+                break;
+            case Alarm.HARD:
+                add1 = 9000;
+                add2 = 1000;
+                mult1 = 14;
+                mult2 = 12;
+                break;
+            default:
+                add1 = 900;
+                add2 = 100;
+                mult1 = 13;
+                mult2 = 3;
+                break;
+        }
 
         switch (op) {
             case ADD:
-                num1 = random.nextInt(900) + 100;
-                num2 = random.nextInt(900) + 100;
+                num1 = random.nextInt(add1) + add2;
+                num2 = random.nextInt(add1) + add2;
                 ans = num1 + num2;
                 break;
             case SUBTRACT:
-                num1 = random.nextInt(900) + 100;
-                num2 = random.nextInt(900) + 100;
+                num1 = random.nextInt(add1) + add2;
+                num2 = random.nextInt(add1) + add2;
 
                 if (num1 < num2) {
                     int temp = num1;
@@ -222,13 +250,13 @@ public class AlarmMathFragment extends Fragment {
                 ans = num1 - num2;
                 break;
             case TIMES:
-                num1 = random.nextInt(13) + 3;
-                num2 = random.nextInt(13) + 3;
+                num1 = random.nextInt(mult1) + mult2;
+                num2 = random.nextInt(mult1) + mult2;
                 ans = num1 * num2;
                 break;
             case DIVIDE:
-                num1 = random.nextInt(13) + 3;
-                num2 = random.nextInt(13) + 3;
+                num1 = random.nextInt(mult1) + mult2;
+                num2 = random.nextInt(mult1) + mult2;
                 ans = num1 * num2;
 
                 int tmp = ans;

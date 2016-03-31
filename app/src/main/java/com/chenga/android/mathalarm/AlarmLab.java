@@ -96,6 +96,10 @@ public class AlarmLab {
         values.put(AlarmTable.Cols.DAYSOFTHEWEEK, alarm.getRepeat());
         values.put(AlarmTable.Cols.REPEAT, alarm.isRepeat() ? 1 : 0);
         values.put(AlarmTable.Cols.ON, alarm.isOn() ? 1 : 0);
+        values.put(AlarmTable.Cols.DIFFICULTY, alarm.getDifficulty());
+        values.put(AlarmTable.Cols.ALARMTONE, alarm.getAlarmTone());
+        values.put(AlarmTable.Cols.SNOOZE, alarm.getSnooze());
+        values.put(AlarmTable.Cols.VIBRATE, alarm.isVibrate() ? 1 : 0);
 
         return values;
     }

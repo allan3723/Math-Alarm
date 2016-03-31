@@ -25,14 +25,6 @@ public class AlarmFragment extends Fragment {
     private AlarmAdapter mAdapter;
     private int mAlarmIndex = -1;
 
-    private static final int SUN = 0;
-    private static final int MON = 1;
-    private static final int TUE = 2;
-    private static final int WED = 3;
-    private static final int THU = 4;
-    private static final int FRI = 5;
-    private static final int SAT = 6;
-
     public static final String GET_ALARM = "GET";
 
     public static AlarmFragment newInstance() {
@@ -169,49 +161,49 @@ public class AlarmFragment extends Fragment {
 
             mSwitchButton.setChecked(mAlarm.isOn());
 
-            if (mRepeat.charAt(SUN) == 'T') {
+            if (mRepeat.charAt(Alarm.SUN) == 'T') {
                 mRepeatTextViewSun.setTextColor(ContextCompat.getColor(getContext(),
                         R.color.colorGold));
             } else
                 mRepeatTextViewSun.setTextColor(ContextCompat.getColor(getContext(),
                         R.color.colorWhite));
 
-            if (mRepeat.charAt(MON) == 'T') {
+            if (mRepeat.charAt(Alarm.MON) == 'T') {
                 mRepeatTextViewMon.setTextColor(ContextCompat.getColor(getContext(),
                         R.color.colorGold));
             } else
                 mRepeatTextViewMon.setTextColor(ContextCompat.getColor(getContext(),
                         R.color.colorWhite));
 
-            if (mRepeat.charAt(TUE) == 'T') {
+            if (mRepeat.charAt(Alarm.TUE) == 'T') {
                 mRepeatTextViewTue.setTextColor(ContextCompat.getColor(getContext(),
                         R.color.colorGold));
             } else
                 mRepeatTextViewTue.setTextColor(ContextCompat.getColor(getContext(),
                         R.color.colorWhite));
 
-            if (mRepeat.charAt(WED) == 'T') {
+            if (mRepeat.charAt(Alarm.WED) == 'T') {
                 mRepeatTextViewWed.setTextColor(ContextCompat.getColor(getContext(),
                         R.color.colorGold));
             } else
                 mRepeatTextViewWed.setTextColor(ContextCompat.getColor(getContext(),
                         R.color.colorWhite));
 
-            if (mRepeat.charAt(THU) == 'T') {
+            if (mRepeat.charAt(Alarm.THU) == 'T') {
                 mRepeatTextViewThu.setTextColor(ContextCompat.getColor(getContext(),
                         R.color.colorGold));
             } else
                 mRepeatTextViewThu.setTextColor(ContextCompat.getColor(getContext(),
                         R.color.colorWhite));
 
-            if (mRepeat.charAt(FRI) == 'T') {
+            if (mRepeat.charAt(Alarm.FRI) == 'T') {
                 mRepeatTextViewFri.setTextColor(ContextCompat.getColor(getContext(),
                         R.color.colorGold));
             } else
                 mRepeatTextViewFri.setTextColor(ContextCompat.getColor(getContext(),
                         R.color.colorWhite));
 
-            if (mRepeat.charAt(SAT) == 'T') {
+            if (mRepeat.charAt(Alarm.SAT) == 'T') {
                 mRepeatTextViewSat.setTextColor(ContextCompat.getColor(getContext(),
                         R.color.colorGold));
             } else {

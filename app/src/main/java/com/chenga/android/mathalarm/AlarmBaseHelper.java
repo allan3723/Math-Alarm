@@ -24,7 +24,11 @@ public class AlarmBaseHelper extends SQLiteOpenHelper {
                         AlarmTable.Cols.MINUTE + ", " +
                         AlarmTable.Cols.REPEAT + ", " +
                         AlarmTable.Cols.DAYSOFTHEWEEK + ", " +
-                        AlarmTable.Cols.ON +
+                        AlarmTable.Cols.ON + ", " +
+                        AlarmTable.Cols.DIFFICULTY + ", " +
+                        AlarmTable.Cols.ALARMTONE + ", " +
+                        AlarmTable.Cols.SNOOZE + ", " +
+                        AlarmTable.Cols.VIBRATE +
                         ")"
         );
     }

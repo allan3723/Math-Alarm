@@ -11,6 +11,10 @@ public class AlarmDbSchema {
             public static final String REPEAT = "repeat";
             public static final String DAYSOFTHEWEEK = "daysoftheweek";
             public static final String ON = "ison";
+            public static final String DIFFICULTY = "difficulty";
+            public static final String ALARMTONE = "tone";
+            public static final String SNOOZE = "snooze";
+            public static final String VIBRATE = "vibrate";
         }
     }
 }

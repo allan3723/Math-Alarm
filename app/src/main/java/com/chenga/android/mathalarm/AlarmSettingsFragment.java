@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -37,13 +38,7 @@ public class AlarmSettingsFragment extends Fragment {
     private static final int REQUEST_TIME = 0;
     private static final String DIALOG_TIME = "DialogTime";
 
-    private static final int SUN = 0;
-    private static final int MON = 1;
-    private static final int TUE = 2;
-    private static final int WED = 3;
-    private static final int THU = 4;
-    private static final int FRI = 5;
-    private static final int SAT = 6;
+
     private static final String TAG = "AlarmSettings";
 
     public static AlarmSettingsFragment newInstance() {
@@ -102,19 +97,19 @@ public class AlarmSettingsFragment extends Fragment {
         });
 
         mRSunTButton = (ToggleButton) v.findViewById(R.id.set_repeat_sun);
-        mRSunTButton.setChecked(mRepeat.charAt(SUN) == 'T');
+        mRSunTButton.setChecked(mRepeat.charAt(Alarm.SUN) == 'T');
         mRSunTButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mRSunTButton.setChecked(mRepeat.charAt(SUN) != 'T');
+                mRSunTButton.setChecked(mRepeat.charAt(Alarm.SUN) != 'T');
 
                 StringBuilder sb = new StringBuilder(mRepeat);
-                if (mRepeat.charAt(SUN) == 'T') {
-                    sb.setCharAt(SUN, 'F');
+                if (mRepeat.charAt(Alarm.SUN) == 'T') {
+                    sb.setCharAt(Alarm.SUN, 'F');
                     mRepeat = sb.toString();
                     mAlarm.setRepeatDays(mRepeat);
                 } else {
-                    sb.setCharAt(SUN, 'T');
+                    sb.setCharAt(Alarm.SUN, 'T');
                     mRepeat = sb.toString();
                     mAlarm.setRepeatDays(mRepeat);
                 }
@@ -122,19 +117,19 @@ public class AlarmSettingsFragment extends Fragment {
         });
 
         mRMonTButton = (ToggleButton) v.findViewById(R.id.set_repeat_mon);
-        mRMonTButton.setChecked(mRepeat.charAt(MON) == 'T');
+        mRMonTButton.setChecked(mRepeat.charAt(Alarm.MON) == 'T');
         mRMonTButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mRMonTButton.setChecked(mRepeat.charAt(MON) != 'T');
+                mRMonTButton.setChecked(mRepeat.charAt(Alarm.MON) != 'T');
 
                 StringBuilder sb = new StringBuilder(mRepeat);
-                if (mRepeat.charAt(MON) == 'T') {
-                    sb.setCharAt(MON, 'F');
+                if (mRepeat.charAt(Alarm.MON) == 'T') {
+                    sb.setCharAt(Alarm.MON, 'F');
                     mRepeat = sb.toString();
                     mAlarm.setRepeatDays(mRepeat);
                 } else {
-                    sb.setCharAt(MON, 'T');
+                    sb.setCharAt(Alarm.MON, 'T');
                     mRepeat = sb.toString();
                     mAlarm.setRepeatDays(mRepeat);
                 }
@@ -142,19 +137,19 @@ public class AlarmSettingsFragment extends Fragment {
         });
 
         mRTueTButton = (ToggleButton) v.findViewById(R.id.set_repeat_tue);
-        mRTueTButton.setChecked(mRepeat.charAt(TUE) == 'T');
+        mRTueTButton.setChecked(mRepeat.charAt(Alarm.TUE) == 'T');
         mRTueTButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mRTueTButton.setChecked(mRepeat.charAt(TUE) != 'T');
+                mRTueTButton.setChecked(mRepeat.charAt(Alarm.TUE) != 'T');
 
                 StringBuilder sb = new StringBuilder(mRepeat);
-                if (mRepeat.charAt(TUE) == 'T') {
-                    sb.setCharAt(TUE, 'F');
+                if (mRepeat.charAt(Alarm.TUE) == 'T') {
+                    sb.setCharAt(Alarm.TUE, 'F');
                     mRepeat = sb.toString();
                     mAlarm.setRepeatDays(mRepeat);
                 } else {
-                    sb.setCharAt(TUE, 'T');
+                    sb.setCharAt(Alarm.TUE, 'T');
                     mRepeat = sb.toString();
                     mAlarm.setRepeatDays(mRepeat);
                 }
@@ -162,19 +157,19 @@ public class AlarmSettingsFragment extends Fragment {
         });
 
         mRWedTButton = (ToggleButton) v.findViewById(R.id.set_repeat_wed);
-        mRWedTButton.setChecked(mRepeat.charAt(WED) == 'T');
+        mRWedTButton.setChecked(mRepeat.charAt(Alarm.WED) == 'T');
         mRWedTButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mRWedTButton.setChecked(mRepeat.charAt(WED) != 'T');
+                mRWedTButton.setChecked(mRepeat.charAt(Alarm.WED) != 'T');
 
                 StringBuilder sb = new StringBuilder(mRepeat);
-                if (mRepeat.charAt(WED) == 'T') {
-                    sb.setCharAt(WED, 'F');
+                if (mRepeat.charAt(Alarm.WED) == 'T') {
+                    sb.setCharAt(Alarm.WED, 'F');
                     mRepeat = sb.toString();
                     mAlarm.setRepeatDays(mRepeat);
                 } else {
-                    sb.setCharAt(WED, 'T');
+                    sb.setCharAt(Alarm.WED, 'T');
                     mRepeat = sb.toString();
                     mAlarm.setRepeatDays(mRepeat);
                 }
@@ -182,19 +177,19 @@ public class AlarmSettingsFragment extends Fragment {
         });
 
         mRThuTButton = (ToggleButton) v.findViewById(R.id.set_repeat_thu);
-        mRThuTButton.setChecked(mRepeat.charAt(THU) == 'T');
+        mRThuTButton.setChecked(mRepeat.charAt(Alarm.THU) == 'T');
         mRThuTButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mRThuTButton.setChecked(mRepeat.charAt(THU) != 'T');
+                mRThuTButton.setChecked(mRepeat.charAt(Alarm.THU) != 'T');
 
                 StringBuilder sb = new StringBuilder(mRepeat);
-                if (mRepeat.charAt(THU) == 'T') {
-                    sb.setCharAt(THU, 'F');
+                if (mRepeat.charAt(Alarm.THU) == 'T') {
+                    sb.setCharAt(Alarm.THU, 'F');
                     mRepeat = sb.toString();
                     mAlarm.setRepeatDays(mRepeat);
                 } else {
-                    sb.setCharAt(THU, 'T');
+                    sb.setCharAt(Alarm.THU, 'T');
                     mRepeat = sb.toString();
                     mAlarm.setRepeatDays(mRepeat);
                 }
@@ -202,19 +197,19 @@ public class AlarmSettingsFragment extends Fragment {
         });
 
         mRFriTButton = (ToggleButton) v.findViewById(R.id.set_repeat_fri);
-        mRFriTButton.setChecked(mRepeat.charAt(FRI) == 'T');
+        mRFriTButton.setChecked(mRepeat.charAt(Alarm.FRI) == 'T');
         mRFriTButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mRFriTButton.setChecked(mRepeat.charAt(FRI) != 'T');
+                mRFriTButton.setChecked(mRepeat.charAt(Alarm.FRI) != 'T');
 
                 StringBuilder sb = new StringBuilder(mRepeat);
-                if (mRepeat.charAt(FRI) == 'T') {
-                    sb.setCharAt(FRI, 'F');
+                if (mRepeat.charAt(Alarm.FRI) == 'T') {
+                    sb.setCharAt(Alarm.FRI, 'F');
                     mRepeat = sb.toString();
                     mAlarm.setRepeatDays(mRepeat);
                 } else {
-                    sb.setCharAt(FRI, 'T');
+                    sb.setCharAt(Alarm.FRI, 'T');
                     mRepeat = sb.toString();
                     mAlarm.setRepeatDays(mRepeat);
                 }
@@ -222,19 +217,19 @@ public class AlarmSettingsFragment extends Fragment {
         });
 
         mRSatTButton = (ToggleButton) v.findViewById(R.id.set_repeat_sat);
-        mRSatTButton.setChecked(mRepeat.charAt(SAT) == 'T');
+        mRSatTButton.setChecked(mRepeat.charAt(Alarm.SAT) == 'T');
         mRSatTButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mRSatTButton.setChecked(mRepeat.charAt(SAT) != 'T');
+                mRSatTButton.setChecked(mRepeat.charAt(Alarm.SAT) != 'T');
 
                 StringBuilder sb = new StringBuilder(mRepeat);
-                if (mRepeat.charAt(SAT) == 'T') {
-                    sb.setCharAt(SAT, 'F');
+                if (mRepeat.charAt(Alarm.SAT) == 'T') {
+                    sb.setCharAt(Alarm.SAT, 'F');
                     mRepeat = sb.toString();
                     mAlarm.setRepeatDays(mRepeat);
                 } else {
-                    sb.setCharAt(SAT, 'T');
+                    sb.setCharAt(Alarm.SAT, 'T');
                     mRepeat = sb.toString();
                     mAlarm.setRepeatDays(mRepeat);
                 }
@@ -267,23 +262,28 @@ public class AlarmSettingsFragment extends Fragment {
                 mAlarm.setIsOn(true);
 
                 // If there is no days set, set the alarm on the closest possible date
-                if (mAlarm.getRepeat().equals("FFFFFF")) {
+                if (mAlarm.getRepeat().equals("FFFFFFF")) {
                     Calendar cal = Calendar.getInstance();
+                    int dayOfTheWeek = mAlarm.getDayOfWeek(cal.get(Calendar.DAY_OF_WEEK));
 
-                    if (mAlarm.getHour() > cal.get(Calendar.HOUR_OF_DAY)) { //set it today
+                    Log.d(TAG, "mAlarm hour = "+mAlarm.getHour()+", hour = "+cal.get(Calendar.HOUR_OF_DAY));
+
+                    if (mAlarm.getHour() > cal.get(Calendar.HOUR_OF_DAY) ||
+                            (mAlarm.getHour() == cal.get(Calendar.HOUR_OF_DAY) &&
+                                    (mAlarm.getMinute() > cal.get(Calendar.MINUTE)))) { //set it today
                         StringBuilder sb = new StringBuilder("FFFFFFF");
-                        sb.setCharAt(cal.get(Calendar.DAY_OF_WEEK), 'T');
+                        sb.setCharAt(dayOfTheWeek, 'T');
                         mAlarm.setRepeatDays(sb.toString());
                     } else {    //alarm time already passed for the day so set it tomorrow
                         StringBuilder sb = new StringBuilder("FFFFFFF");
-                        int dayOfTheWeek = cal.get(Calendar.DAY_OF_WEEK);
 
-                        if (dayOfTheWeek == 6) { //if it is saturday
-                            dayOfTheWeek = 0;
+                        if (dayOfTheWeek == Alarm.SAT) { //if it is saturday
+                            dayOfTheWeek = Alarm.SUN;
                         } else {
                             dayOfTheWeek++;
                         }
                         sb.setCharAt(dayOfTheWeek, 'T');
+                        Log.d(TAG, "repeat = " + sb.toString());
                         mAlarm.setRepeatDays(sb.toString());
                     }
                 }

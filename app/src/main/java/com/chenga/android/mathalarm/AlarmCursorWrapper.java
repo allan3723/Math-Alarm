@@ -20,6 +20,10 @@ public class AlarmCursorWrapper extends CursorWrapper {
         int repeat = getInt(getColumnIndex(AlarmTable.Cols.REPEAT));
         String days = getString(getColumnIndex(AlarmTable.Cols.DAYSOFTHEWEEK));
         int on = getInt(getColumnIndex(AlarmTable.Cols.ON));
+        int difficulty = getInt(getColumnIndex(AlarmTable.Cols.DIFFICULTY));
+        String tone = getString(getColumnIndex(AlarmTable.Cols.ALARMTONE));
+        int snooze = getInt(getColumnIndex(AlarmTable.Cols.SNOOZE));
+        int vibrate = getInt(getColumnIndex(AlarmTable.Cols.VIBRATE));
 
         Alarm alarm = new Alarm(UUID.fromString(alarmId));
         alarm.setHour(hour);
@@ -27,6 +31,10 @@ public class AlarmCursorWrapper extends CursorWrapper {
         alarm.setRepeat(repeat != 0);
         alarm.setRepeatDays(days);
         alarm.setIsOn(on != 0);
+        alarm.setDifficulty(difficulty);
+        alarm.setAlarmTone(tone);
+        alarm.setSnooze(snooze);
+        alarm.setVibrate(vibrate != 0);
 
         return alarm;
     }
