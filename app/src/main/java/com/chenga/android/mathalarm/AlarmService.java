@@ -12,6 +12,7 @@ import android.os.Vibrator;
 import android.util.Log;
 
 import java.io.IOException;
+import java.util.UUID;
 
 public class AlarmService extends IntentService {
 
@@ -23,6 +24,7 @@ public class AlarmService extends IntentService {
     public void onHandleIntent(Intent intent) {
 
         Intent mathActivity = new Intent(this, AlarmMathActivity.class);
+        mathActivity.putExtra(Alarm.ALARM_EXTRA, (UUID) intent.getExtras().get(Alarm.ALARM_EXTRA));
         mathActivity.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(mathActivity);
 

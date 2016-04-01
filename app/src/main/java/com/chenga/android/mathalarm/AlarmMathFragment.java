@@ -1,5 +1,6 @@
 package com.chenga.android.mathalarm;
 
+import android.database.Cursor;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.media.RingtoneManager;
@@ -67,6 +68,7 @@ public class AlarmMathFragment extends Fragment {
 
         Bundle extra = getActivity().getIntent().getExtras();
 
+
         UUID alarmId = (UUID) extra.get(Alarm.ALARM_EXTRA);
         Alarm alarm = AlarmLab.get(getActivity()).getAlarm(alarmId);
 
@@ -76,6 +78,30 @@ public class AlarmMathFragment extends Fragment {
         if (alarmUri == null) {
             alarmUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         }
+
+        //--------------------
+        RingtoneManager ringtoneMgr = new RingtoneManager(getActivity());
+        ringtoneMgr.setType(RingtoneManager.TYPE_ALL);
+        Cursor alarmsCursor = ringtoneMgr.getCursor();
+        int alarmsCount = alarmsCursor.getCount();
+        if (alarmsCount == 0 && !alarmsCursor.moveToFirst()) {
+            return null;
+        }
+        Uri[] alarms = new Uri[alarmsCount];
+        String[] alarmTitle = new String[alarmsCount];
+        while(!alarmsCursor.isAfterLast() && alarmsCursor.moveToNext()) {
+            int currentPosition = alarmsCursor.getPosition();
+            alarms[currentPosition] = ringtoneMgr.getRingtoneUri(currentPosition);
+            alarmTitle[currentPosition] = ringtoneMgr.getRingtone(currentPosition)
+                    .getTitle(getActivity());
+
+        }
+        alarmsCursor.close();
+
+        for (int i = 0; i < alarms.length; i++) {
+            Log.d("AlarmMathFragment", alarmTitle[i].toString() + "\n");
+        }
+        //--------------------
 
         try {
             mp.setDataSource(getContext(), alarmUri);
