@@ -27,20 +27,6 @@ public class AlarmService extends IntentService {
         mathActivity.putExtra(Alarm.ALARM_EXTRA, (UUID) intent.getExtras().get(Alarm.ALARM_EXTRA));
         mathActivity.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(mathActivity);
-
-        for (int i=0; i<5; i++) {
-            Log.i("SimpleWakefulReceiver", "Running service " + (i+1)
-                    + "/5 @ " + SystemClock.elapsedRealtime());
-
-            Vibrator v = (Vibrator) this.getSystemService(Context.VIBRATOR_SERVICE);
-            //v.vibrate(1000);
-
-            try {
-                Thread.sleep(5000);
-            } catch (InterruptedException e) {
-            }
-        }
-
         AlarmReceiver.completeWakefulIntent(intent);
     }
 

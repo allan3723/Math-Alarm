@@ -4,7 +4,7 @@ import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
+import android.widget.Toast;
 
 import java.util.Calendar;
 import java.util.UUID;
@@ -162,10 +162,6 @@ public class Alarm {
                 PendingIntent alarmIntent = PendingIntent.getBroadcast(context, intentId, alarm,
                         PendingIntent.FLAG_CANCEL_CURRENT);
 
-                Log.d("Alarm", "Alarm scheduled on " + cal.get(Calendar.YEAR)+ "/" +
-                        cal.get(Calendar.MONTH) + "/" + cal.get(Calendar.DAY_OF_MONTH) + " at " +
-                        android.text.format.DateFormat.format("hh:mm a", cal));
-
                 AlarmManager alarmManager = (AlarmManager) context
                         .getSystemService(Context.ALARM_SERVICE);
 
@@ -175,6 +171,9 @@ public class Alarm {
                 } else {
                     alarmManager.set(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), alarmIntent);
                 }
+
+                Toast.makeText(context, getTimeLeftMessage(cal.getTimeInMillis()),
+                        Toast.LENGTH_SHORT).show();
             }
         }
     }
@@ -196,6 +195,27 @@ public class Alarm {
                 alarmManager.cancel(cancelAlarmPI);
             }
         }
+    }
+
+    public String getTimeLeftMessage(long alarmTime) {
+        String message;
+        long remainderTime = alarmTime - System.currentTimeMillis();
+
+        int minutes = (int) ((remainderTime / (1000*60)) % 60);
+        int hours   = (int) ((remainderTime / (1000*60*60)) % 24);
+        int days = (int) (remainderTime / (1000*60*60*24));
+
+        if (days == 0) {
+            if (hours == 0) {
+                message = "Alarm scheduled in "+minutes+" minutes.";
+            } else {
+                message = "Alarm schedule in "+hours+" hours, "+minutes+" minutes.";
+            }
+        } else {
+            message = "Alarm schedule in "+days+" days, "+hours+" hours, "+minutes+" minutes.";
+        }
+
+        return message;
     }
 
     public int getDayOfWeek(int day) {

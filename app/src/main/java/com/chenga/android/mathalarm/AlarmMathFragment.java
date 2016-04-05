@@ -1,14 +1,13 @@
 package com.chenga.android.mathalarm;
 
 import android.app.Activity;
-import android.database.Cursor;
+import android.content.Context;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
-import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Vibrator;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,7 +17,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.IOException;
-import java.util.Calendar;
 import java.util.Random;
 import java.util.UUID;
 
@@ -49,7 +47,9 @@ public class AlarmMathFragment extends Fragment {
     private static final int SUBTRACT = 1;
     private static final int TIMES = 2;
     private static final int DIVIDE = 3;
+
     private MediaPlayer mp = new MediaPlayer();
+    private boolean vibrateRunning = false;
 
     public static AlarmMathFragment newInstance() {
         return new AlarmMathFragment();
@@ -88,13 +88,33 @@ public class AlarmMathFragment extends Fragment {
             e.printStackTrace();
         }
 
-        getMathProblem(alarm.getDifficulty());
-        Log.d("Math Fragment", "Difficulty = "+ alarm.getDifficulty());
-        sb = new StringBuilder("");
-        Calendar cal = Calendar.getInstance();
+        if (alarm.isVibrate()) {
+            vibrateRunning = true;
+            Thread thread = new Thread(new Runnable(){
+                @Override
+                public void run(){
+                    while(vibrateRunning) {
 
-        //mAlarmTime = (TextView) v.findViewById(R.id.math_alarm_time);
-        //mAlarmTime.setText(android.text.format.DateFormat.format("hh:mm a", cal));
+                        Vibrator v = (Vibrator) getActivity().getSystemService(Context.VIBRATOR_SERVICE);
+                        v.vibrate(1000);
+
+                        try {
+                            Thread.sleep(5000);
+                        } catch (InterruptedException e) {
+                        }
+                    }
+
+                    if (!vibrateRunning) {
+                        return;
+                    }
+                }
+            });
+            thread.start();
+
+        }
+
+        getMathProblem(alarm.getDifficulty());
+        sb = new StringBuilder("");
         mQuestion = (TextView) v.findViewById(R.id.math_question);
         mQuestion.setText(getMathString());
         mAnswer = (TextView) v.findViewById(R.id.math_answer);
@@ -206,6 +226,7 @@ public class AlarmMathFragment extends Fragment {
                     mAnswer.setText("");
                 } else {
                     mp.stop();
+                    vibrateRunning = false;
                     getActivity().setResult(Activity.RESULT_OK);
                     getActivity().finish();
                 }
@@ -220,6 +241,7 @@ public class AlarmMathFragment extends Fragment {
                             getString(R.string.snooze_off), Toast.LENGTH_SHORT).show();
                 } else {
                     mp.stop();
+                    vibrateRunning = false;
                     alarm.setMinute(alarm.getMinute() + alarm.getSnooze());
                     alarm.scheduleAlarm(getActivity());
                     getActivity().finish();

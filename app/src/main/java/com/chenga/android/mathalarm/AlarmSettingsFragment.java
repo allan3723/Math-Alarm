@@ -9,7 +9,6 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -390,8 +389,6 @@ public class AlarmSettingsFragment extends Fragment {
                 if (mAlarm.getRepeat().equals("FFFFFFF")) {
                     Calendar cal = Calendar.getInstance();
                     int dayOfTheWeek = mAlarm.getDayOfWeek(cal.get(Calendar.DAY_OF_WEEK));
-
-                    Log.d(TAG, "mAlarm hour = "+mAlarm.getHour()+", hour = "+cal.get(Calendar.HOUR_OF_DAY));
 
                     if (mAlarm.getHour() > cal.get(Calendar.HOUR_OF_DAY) ||
                             (mAlarm.getHour() == cal.get(Calendar.HOUR_OF_DAY) &&
