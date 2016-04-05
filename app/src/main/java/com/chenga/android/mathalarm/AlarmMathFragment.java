@@ -76,16 +76,20 @@ public class AlarmMathFragment extends Fragment {
 
         View v = inflater.inflate(R.layout.fragment_alarm_math, parent, false);
 
-        Uri alarmUri = Uri.parse(alarm.getAlarmTone());
+        if (alarm.getAlarmTone() != null) {
+            Uri alarmUri = Uri.parse(alarm.getAlarmTone());
 
-        try {
-            mp.setDataSource(getContext(), alarmUri);
-            mp.setAudioStreamType(AudioManager.STREAM_MUSIC);
-            mp.prepare();
-            mp.setLooping(true);
-            mp.start();
-        } catch (IOException e) {
-            e.printStackTrace();
+            try {
+                mp.setDataSource(getContext(), alarmUri);
+                mp.setAudioStreamType(AudioManager.STREAM_MUSIC);
+                mp.prepare();
+                mp.setLooping(true);
+                mp.start();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else {
+            Toast.makeText(getActivity(), "Alarm tone not available.", Toast.LENGTH_SHORT).show();
         }
 
         if (alarm.isVibrate()) {

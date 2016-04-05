@@ -9,7 +9,6 @@ import java.util.UUID;
 public class AlarmReceiver extends WakefulBroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
-
         Intent service = new Intent(context, AlarmService.class);
         service.putExtra(Alarm.ALARM_EXTRA, (UUID) intent.getExtras().get(Alarm.ALARM_EXTRA));
         startWakefulService(context, service);

@@ -171,9 +171,6 @@ public class Alarm {
                 } else {
                     alarmManager.set(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), alarmIntent);
                 }
-
-                Toast.makeText(context, getTimeLeftMessage(cal.getTimeInMillis()),
-                        Toast.LENGTH_SHORT).show();
             }
         }
     }
@@ -197,8 +194,15 @@ public class Alarm {
         }
     }
 
-    public String getTimeLeftMessage(long alarmTime) {
+    public String getTimeLeftMessage() {
         String message;
+
+        Calendar cal = Calendar.getInstance();
+        cal.set(Calendar.HOUR_OF_DAY, mHour);
+        cal.set(Calendar.MINUTE, mMinute);
+        cal.set(Calendar.SECOND, 0);
+
+        long alarmTime = cal.getTimeInMillis();
         long remainderTime = alarmTime - System.currentTimeMillis();
 
         int minutes = (int) ((remainderTime / (1000*60)) % 60);

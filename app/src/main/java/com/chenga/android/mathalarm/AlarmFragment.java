@@ -16,7 +16,9 @@ import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import java.util.Calendar;
 import java.util.List;
 
 public class AlarmFragment extends Fragment {
@@ -126,6 +128,8 @@ public class AlarmFragment extends Fragment {
 
                     if (mAlarm.isOn()) {
                         mAlarm.scheduleAlarm(getActivity());
+                        Toast.makeText(getActivity(), mAlarm.getTimeLeftMessage(),
+                                Toast.LENGTH_SHORT).show();
                     } else {
                         mAlarm.cancelAlarm(getActivity());
                     }

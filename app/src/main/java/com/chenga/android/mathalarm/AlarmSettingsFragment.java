@@ -420,12 +420,14 @@ public class AlarmSettingsFragment extends Fragment {
                     AlarmLab.get(getActivity()).addAlarm(mAlarm);
                 } else {
                     Alarm oldAlarm = AlarmLab.get(getActivity()).getAlarm(mAlarm.getId());
-                    oldAlarm.cancelAlarm(getContext());
+                    oldAlarm.cancelAlarm(getActivity());
                     AlarmLab.get(getActivity()).updateAlarm(mAlarm);
                 }
 
                 //schedule it and close settings
-                mAlarm.scheduleAlarm(getContext());
+                mAlarm.scheduleAlarm(getActivity());
+                Toast.makeText(getActivity(), mAlarm.getTimeLeftMessage(),
+                        Toast.LENGTH_SHORT).show();
                 getActivity().finish();
                 return true;
             case R.id.fragment_settings_delete:
