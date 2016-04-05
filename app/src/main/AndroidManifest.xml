@@ -21,7 +21,9 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".AlarmSettingsActivity">
+        <activity android:name=".AlarmSettingsActivity"
+                  android:configChanges="orientation|screenSize"
+                  android:windowSoftInputMode="stateHidden">
         </activity>
         <activity android:name=".AlarmMathActivity"
                   android:configChanges="orientation|screenSize">

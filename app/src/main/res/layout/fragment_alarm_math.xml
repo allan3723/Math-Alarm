@@ -52,72 +52,99 @@
 
                 <LinearLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp">
 
                     <Button
                         android:id="@+id/math_btn_1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:background="@color/colorBlack"
+                        android:textColor="@color/colorWhite"
+                        android:layout_marginRight="10dp"
                         android:text="@string/one"
                         android:layout_weight="1"/>
                     <Button
                         android:id="@+id/math_btn_2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:background="@color/colorBlack"
+                        android:textColor="@color/colorWhite"
+                        android:layout_marginRight="10dp"
                         android:text="@string/two"
                         android:layout_weight="1"/>
                     <Button
                         android:id="@+id/math_btn_3"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:background="@color/colorBlack"
+                        android:textColor="@color/colorWhite"
                         android:text="@string/three"
                         android:layout_weight="1"/>
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp">
 
                     <Button
                         android:id="@+id/math_btn_4"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:background="@color/colorBlack"
+                        android:textColor="@color/colorWhite"
+                        android:layout_marginRight="10dp"
                         android:text="@string/four"
                         android:layout_weight="1"/>
                     <Button
                         android:id="@+id/math_btn_5"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:background="@color/colorBlack"
+                        android:textColor="@color/colorWhite"
+                        android:layout_marginRight="10dp"
                         android:text="@string/five"
                         android:layout_weight="1"/>
                     <Button
                         android:id="@+id/math_btn_6"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:background="@color/colorBlack"
+                        android:textColor="@color/colorWhite"
                         android:text="@string/six"
                         android:layout_weight="1"/>
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp">
 
                     <Button
                         android:id="@+id/math_btn_7"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:background="@color/colorBlack"
+                        android:textColor="@color/colorWhite"
+                        android:layout_marginRight="10dp"
                         android:text="@string/seven"
                         android:layout_weight="1"/>
                     <Button
                         android:id="@+id/math_btn_8"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:background="@color/colorBlack"
+                        android:textColor="@color/colorWhite"
+                        android:layout_marginRight="10dp"
                         android:text="@string/eight"
                         android:layout_weight="1"/>
                     <Button
                         android:id="@+id/math_btn_9"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:background="@color/colorBlack"
+                        android:textColor="@color/colorWhite"
                         android:text="@string/nine"
                         android:layout_weight="1"/>
                 </LinearLayout>
@@ -130,23 +157,65 @@
                         android:id="@+id/math_btn_del"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:background="@color/colorBlack"
+                        android:textColor="@color/colorWhite"
+                        android:layout_marginRight="10dp"
                         android:text="@string/delete"
                         android:layout_weight="1"/>
                     <Button
                         android:id="@+id/math_btn_0"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:background="@color/colorBlack"
+                        android:textColor="@color/colorWhite"
+                        android:layout_marginRight="10dp"
                         android:text="@string/zero"
                         android:layout_weight="1"/>
                     <Button
-                        android:id="@+id/math_btn_set"
+                        android:id="@+id/math_btn_clear"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/set"
+                        android:background="@color/colorBlack"
+                        android:textColor="@color/colorWhite"
+                        android:text="@string/clear"
                         android:layout_weight="1"/>
+
                 </LinearLayout>
 
             </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/math_btn_set"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_marginTop="20dp"
+                android:layout_marginLeft="40dp"
+                android:layout_marginRight="10dp"
+                android:background="@color/colorSkyBlue"
+                android:textColor="@color/colorWhite"
+                android:text="@string/set"/>
+
+            <Button
+                android:id="@+id/math_btn_snooze"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_marginTop="20dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="40dp"
+                android:background="@color/colorNightBlue"
+                android:textColor="@color/colorWhite"
+                android:text="@string/snooze"/>
 
         </LinearLayout>
 

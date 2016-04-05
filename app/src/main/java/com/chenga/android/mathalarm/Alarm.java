@@ -39,7 +39,7 @@ public class Alarm {
         mId = UUID.randomUUID();
         mRepeatDays = new String("FFFFFFF");
         mDifficulty = EASY;
-        mSnooze = 10;
+        mSnooze = 5;
     }
 
     public Alarm(UUID id) {

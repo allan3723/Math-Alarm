@@ -1,5 +1,6 @@
 package com.chenga.android.mathalarm;
 
+import android.app.Activity;
 import android.database.Cursor;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
@@ -38,6 +39,8 @@ public class AlarmMathFragment extends Fragment {
     Button mZeroButton;
     Button mSetButton;
     Button mDelButton;
+    Button mClearButton;
+    Button mSnoozeButton;
 
     private StringBuilder sb;
     private int op, num1, num2, ans;
@@ -68,40 +71,12 @@ public class AlarmMathFragment extends Fragment {
 
         Bundle extra = getActivity().getIntent().getExtras();
 
-
         UUID alarmId = (UUID) extra.get(Alarm.ALARM_EXTRA);
-        Alarm alarm = AlarmLab.get(getActivity()).getAlarm(alarmId);
+        final Alarm alarm = AlarmLab.get(getActivity()).getAlarm(alarmId);
 
         View v = inflater.inflate(R.layout.fragment_alarm_math, parent, false);
 
-        Uri alarmUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
-        if (alarmUri == null) {
-            alarmUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-        }
-
-        //--------------------
-        RingtoneManager ringtoneMgr = new RingtoneManager(getActivity());
-        ringtoneMgr.setType(RingtoneManager.TYPE_ALL);
-        Cursor alarmsCursor = ringtoneMgr.getCursor();
-        int alarmsCount = alarmsCursor.getCount();
-        if (alarmsCount == 0 && !alarmsCursor.moveToFirst()) {
-            return null;
-        }
-        Uri[] alarms = new Uri[alarmsCount];
-        String[] alarmTitle = new String[alarmsCount];
-        while(!alarmsCursor.isAfterLast() && alarmsCursor.moveToNext()) {
-            int currentPosition = alarmsCursor.getPosition();
-            alarms[currentPosition] = ringtoneMgr.getRingtoneUri(currentPosition);
-            alarmTitle[currentPosition] = ringtoneMgr.getRingtone(currentPosition)
-                    .getTitle(getActivity());
-
-        }
-        alarmsCursor.close();
-
-        for (int i = 0; i < alarms.length; i++) {
-            Log.d("AlarmMathFragment", alarmTitle[i].toString() + "\n");
-        }
-        //--------------------
+        Uri alarmUri = Uri.parse(alarm.getAlarmTone());
 
         try {
             mp.setDataSource(getContext(), alarmUri);
@@ -203,6 +178,24 @@ public class AlarmMathFragment extends Fragment {
                 mAnswer.setText(sb);
             }
         });
+        mDelButton = (Button) v.findViewById(R.id.math_btn_del);
+        mDelButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (sb.length() != 0) {
+                    sb.deleteCharAt(sb.length() - 1);
+                    mAnswer.setText(sb);
+                }
+            }
+        });
+        mClearButton = (Button) v.findViewById(R.id.math_btn_clear);
+        mClearButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                sb.delete(0, sb.length());
+                mAnswer.setText(sb);
+            }
+        });
         mSetButton = (Button) v.findViewById(R.id.math_btn_set);
         mSetButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -213,17 +206,23 @@ public class AlarmMathFragment extends Fragment {
                     mAnswer.setText("");
                 } else {
                     mp.stop();
+                    getActivity().setResult(Activity.RESULT_OK);
                     getActivity().finish();
                 }
             }
         });
-        mDelButton = (Button) v.findViewById(R.id.math_btn_del);
-        mDelButton.setOnClickListener(new View.OnClickListener() {
+        mSnoozeButton = (Button) v.findViewById(R.id.math_btn_snooze);
+        mSnoozeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (sb.length() != 0) {
-                    sb.deleteCharAt(sb.length() - 1);
-                    mAnswer.setText(sb);
+                if (alarm.getSnooze() == 0) {
+                    Toast.makeText(getActivity(),
+                            getString(R.string.snooze_off), Toast.LENGTH_SHORT).show();
+                } else {
+                    mp.stop();
+                    alarm.setMinute(alarm.getMinute() + alarm.getSnooze());
+                    alarm.scheduleAlarm(getActivity());
+                    getActivity().finish();
                 }
             }
         });

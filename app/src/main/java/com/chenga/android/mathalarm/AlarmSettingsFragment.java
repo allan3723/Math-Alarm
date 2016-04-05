@@ -2,8 +2,13 @@ package com.chenga.android.mathalarm;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.database.Cursor;
+import android.media.RingtoneManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -11,11 +16,18 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.ToggleButton;
 
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 import java.util.UUID;
 
 public class AlarmSettingsFragment extends Fragment {
@@ -29,14 +41,23 @@ public class AlarmSettingsFragment extends Fragment {
     ToggleButton mRFriTButton;
     ToggleButton mRSatTButton;
     Switch mRepeatSwitch;
+    Spinner mDifficultySpinner;
+    Spinner mToneSpinner;
+    EditText mSnoozeText;
+    Switch mVibrateSwitch;
+    Button mTestButton;
 
     AlarmLab mAlarmLab;
     Alarm mAlarm;
+    Alarm mTestAlarm;
     String mId, mRepeat;
     boolean mAdd = false;
 
+    Uri[] mAlarmTones;
+
     private static final int REQUEST_TIME = 0;
     private static final String DIALOG_TIME = "DialogTime";
+    private static final int REQUEST_TEST = 1;
 
 
     private static final String TAG = "AlarmSettings";
@@ -246,6 +267,110 @@ public class AlarmSettingsFragment extends Fragment {
             }
         });
 
+
+        mToneSpinner = (Spinner) v.findViewById(R.id.settings_tone_spinner);
+        List<String> toneItems = new ArrayList<>();
+        RingtoneManager ringtoneMgr = new RingtoneManager(getActivity());
+        ringtoneMgr.setType(RingtoneManager.TYPE_ALARM);
+        Cursor alarmsCursor = ringtoneMgr.getCursor();
+        int alarmsCount = alarmsCursor.getCount();
+
+        if (alarmsCount == 0) { //if there are no alarms, use notification sounds
+            ringtoneMgr.setType(RingtoneManager.TYPE_NOTIFICATION);
+            alarmsCursor = ringtoneMgr.getCursor();
+            alarmsCount = alarmsCursor.getCount();
+
+            if (alarmsCount == 0) { //if no alarms and notification sounds, finally use ringtones
+                ringtoneMgr.setType(RingtoneManager.TYPE_RINGTONE);
+                alarmsCursor = ringtoneMgr.getCursor();
+                alarmsCount = alarmsCursor.getCount();
+            }
+        }
+
+        if (alarmsCount == 0 && !alarmsCursor.moveToFirst()) {
+            Toast.makeText(getActivity(), "No sound files available", Toast.LENGTH_SHORT).show();
+        }
+
+        mAlarmTones = new Uri[alarmsCount];
+
+        int previousPosition = 0;
+        String currentTone = mAlarm.getAlarmTone();
+
+        while(!alarmsCursor.isAfterLast() && alarmsCursor.moveToNext()) {
+            int currentPosition = alarmsCursor.getPosition();
+            mAlarmTones[currentPosition] = ringtoneMgr.getRingtoneUri(currentPosition);
+            toneItems.add(ringtoneMgr.getRingtone(currentPosition)
+                    .getTitle(getActivity()));
+
+            if (currentTone != null &&
+                    currentTone.equals(mAlarmTones[currentPosition].toString())) {
+                previousPosition = currentPosition;
+            }
+        }
+
+
+        ArrayAdapter<String> toneAdapter = new ArrayAdapter<>(getActivity(),
+                android.R.layout.simple_spinner_dropdown_item, toneItems);
+        mToneSpinner.setAdapter(toneAdapter);
+        mToneSpinner.setSelection(previousPosition);
+
+        mDifficultySpinner = (Spinner) v.findViewById(R.id.settings_math_difficulty_spinner);
+        String[] difficultyItems = new String[]{"Easy", "Medium", "Hard"};
+        ArrayAdapter<String> difficultyAdapter = new ArrayAdapter<>(getActivity(),
+                android.R.layout.simple_spinner_dropdown_item, difficultyItems);
+        mDifficultySpinner.setAdapter(difficultyAdapter);
+        mDifficultySpinner.setSelection(mAlarm.getDifficulty());
+
+        mSnoozeText = (EditText) v.findViewById(R.id.settings_snooze_text);
+        mSnoozeText.setText(Integer.toString(mAlarm.getSnooze()));
+        mSnoozeText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (s.length() != 0) {
+                    mAlarm.setSnooze(Integer.parseInt(s.toString()));
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+        mVibrateSwitch = (Switch) v.findViewById(R.id.settings_vibrate_switch);
+        mVibrateSwitch.setChecked(mAlarm.isVibrate());
+        mVibrateSwitch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mVibrateSwitch.setChecked(!mAlarm.isVibrate());
+                mAlarm.setVibrate(!mAlarm.isVibrate());
+            }
+        });
+
+        mTestButton = (Button) v.findViewById(R.id.settings_test_button);
+        mTestButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mTestAlarm = new Alarm();
+                mTestAlarm.setDifficulty(mDifficultySpinner.getSelectedItemPosition());
+                if (mAlarmTones.length != 0) {
+                    mTestAlarm.setAlarmTone(mAlarmTones[mToneSpinner
+                            .getSelectedItemPosition()].toString());
+                }
+                mTestAlarm.setVibrate(mVibrateSwitch.isChecked());
+                mTestAlarm.setSnooze(0);
+                AlarmLab.get(getActivity()).addAlarm(mTestAlarm);
+                Intent test = new Intent(getActivity(), AlarmMathActivity.class);
+                test.putExtra(Alarm.ALARM_EXTRA, mTestAlarm.getId());
+                startActivityForResult(test, REQUEST_TEST);
+            }
+        });
+
         return v;
     }
 
@@ -283,9 +408,14 @@ public class AlarmSettingsFragment extends Fragment {
                             dayOfTheWeek++;
                         }
                         sb.setCharAt(dayOfTheWeek, 'T');
-                        Log.d(TAG, "repeat = " + sb.toString());
                         mAlarm.setRepeatDays(sb.toString());
                     }
+                }
+
+                mAlarm.setDifficulty(mDifficultySpinner.getSelectedItemPosition());
+                if (mAlarmTones.length != 0) {
+                    mAlarm.setAlarmTone(mAlarmTones[mToneSpinner
+                            .getSelectedItemPosition()].toString());
                 }
 
                 //update to database
@@ -327,6 +457,10 @@ public class AlarmSettingsFragment extends Fragment {
             mAlarm.setHour(hour);
             mAlarm.setMinute(min);
             mTime.setText(mAlarm.getFormatTime());
+        } else {
+            if (requestCode == REQUEST_TEST) {
+                AlarmLab.get(getActivity()).deleteAlarm(mTestAlarm.getId());
+            }
         }
     }
 

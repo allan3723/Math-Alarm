@@ -3,12 +3,19 @@
 
     <string name="time_picker_title">Set Alarm Time:</string>
 
-    <string name="settings_time_title">Alarm Time</string>
+    <string name="settings_time_title">Set Alarm Time</string>
 
     <string name="settings_day_title">Set On</string>
 
     <string name="settings_repeat_title">Repeat</string>
     <string name="settings_repeat_text">Repeat Weekly</string>
+    <string name="settings_setting_title">Alarm Settings</string>
+    <string name="settings_vibrate_text">Vibrate</string>
+    <string name="settings_tone_text">Alarm Tone</string>
+    <string name="settings_snooze_text">Snooze (0 = OFF)</string>
+    <string name="minutes">minute(s)</string>
+    <string name="settings_math_difficulty_text">Math Difficulty</string>
+    <string name="settings_test">Test Alarm</string>
 
     <string name="menu_add_alarm">Add Alarm</string>
     <string name="menu_settings_done">Set</string>
@@ -32,7 +39,11 @@
     <string name="seven">7</string>
     <string name="eight">8</string>
     <string name="nine">9</string>
-    <string name="set">OK</string>
     <string name="delete">DEL</string>
+    <string name="clear">CLEAR</string>
+    <string name="set">TURN OFF</string>
+    <string name="snooze">SNOOZE</string>
+
+    <string name="snooze_off">No snooze allowed</string>
 
 </resources>
