@@ -296,7 +296,6 @@ public class Alarm {
         for (i = nextAlarmDay; i != lastAlarmDay; i++) {
             if(i == 7) {
                 i = 0;
-                continue;
             }
             if (mRepeatDays.charAt(i) == 'T') {
                 break;
