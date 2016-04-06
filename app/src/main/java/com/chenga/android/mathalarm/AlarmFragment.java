@@ -160,10 +160,14 @@ public class AlarmFragment extends Fragment {
             }
 
             mTimeTextView.setText(mAlarm.getFormatTime());
+            int color;
+            if (mAlarm.isRepeat()) {
+                color = R.color.colorGold;
+            } else {
+                color = R.color.colorWhite;
+            }
             mTimeTextView.setTextColor(ContextCompat.getColor(getContext(),
-                    R.color.colorWhite));
-
-            mSwitchButton.setChecked(mAlarm.isOn());
+                    color));
 
             if (mRepeat.charAt(Alarm.SUN) == 'T') {
                 mRepeatTextViewSun.setTextColor(ContextCompat.getColor(getContext(),

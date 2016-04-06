@@ -2,6 +2,7 @@ package com.chenga.android.mathalarm;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
@@ -17,12 +18,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.IOException;
+import java.util.Calendar;
 import java.util.Random;
 import java.util.UUID;
 
 public class AlarmMathFragment extends Fragment {
 
-    TextView mAlarmTime;
     TextView mQuestion;
     TextView mAnswer;
     Button mOneButton;
@@ -69,13 +70,29 @@ public class AlarmMathFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup parent,
                              Bundle savedInstanceState) {
 
-        Bundle extra = getActivity().getIntent().getExtras();
+        Intent intent = getActivity().getIntent();
+        Bundle extra = intent.getExtras();
 
         UUID alarmId = (UUID) extra.get(Alarm.ALARM_EXTRA);
         final Alarm alarm = AlarmLab.get(getActivity()).getAlarm(alarmId);
 
         View v = inflater.inflate(R.layout.fragment_alarm_math, parent, false);
 
+        int dayOfTheWeek = alarm.getDayOfWeek(Calendar.getInstance()
+                .get(Calendar.DAY_OF_WEEK));
+
+        if (!alarm.isRepeat()) {
+            StringBuilder repeat = new StringBuilder(alarm.getRepeat());
+            repeat.setCharAt(dayOfTheWeek, 'F');
+            alarm.setRepeatDays(repeat.toString());
+            if (!alarm.isActive()) {
+                alarm.setIsOn(false);
+            }
+            AlarmLab.get(getActivity()).updateAlarm(alarm);
+        }
+
+
+        //Play alarm tone
         if (alarm.getAlarmTone() != null) {
             Uri alarmUri = Uri.parse(alarm.getAlarmTone());
 
@@ -92,6 +109,7 @@ public class AlarmMathFragment extends Fragment {
             Toast.makeText(getActivity(), "Alarm tone not available.", Toast.LENGTH_SHORT).show();
         }
 
+        //Vibrate phone
         if (alarm.isVibrate()) {
             vibrateRunning = true;
             Thread thread = new Thread(new Runnable(){
@@ -117,7 +135,10 @@ public class AlarmMathFragment extends Fragment {
 
         }
 
+        //Get difficulty
         getMathProblem(alarm.getDifficulty());
+
+        //Initialize the buttons and the on click actions
         sb = new StringBuilder("");
         mQuestion = (TextView) v.findViewById(R.id.math_question);
         mQuestion.setText(getMathString());
@@ -322,13 +343,13 @@ public class AlarmMathFragment extends Fragment {
     private String getMathString() {
         switch(op) {
             case ADD:
-                return new String(num1 + " + " + num2 + " = ");
+                return (num1 + " + " + num2 + " = ");
             case SUBTRACT:
-                return new String(num1 + " - " + num2 + " = ");
+                return (num1 + " - " + num2 + " = ");
             case TIMES:
-                return new String(num1 + " x " + num2 + " = ");
+                return (num1 + " x " + num2 + " = ");
             case DIVIDE:
-                return new String(num1 + " / " + num2 + " = ");
+                return (num1 + " / " + num2 + " = ");
             default:
                 return null;
         }

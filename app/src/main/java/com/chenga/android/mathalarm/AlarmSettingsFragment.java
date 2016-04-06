@@ -257,12 +257,12 @@ public class AlarmSettingsFragment extends Fragment {
         });
 
         mRepeatSwitch = (Switch) v.findViewById(R.id.settings_repeat_switch);
-        mRepeatSwitch.setChecked(mAlarm.isOn());
+        mRepeatSwitch.setChecked(mAlarm.isRepeat());
         mRepeatSwitch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mRepeatSwitch.setChecked(!mAlarm.isRepeat());
-                mAlarm.setIsOn(!mAlarm.isRepeat());
+                mAlarm.setRepeat(!mAlarm.isRepeat());
             }
         });
 

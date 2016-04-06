@@ -11,15 +11,15 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
         android:padding="4dp"
         android:gravity="center"
-        android:layout_alignBottom="@+id/alarm_time"/>
+        android:layout_above="@+id/linearLayout"/>
 
     <TextView
         android:id="@+id/alarm_time"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_toLeftOf="@id/alarm_switch_button"
         android:textStyle="bold"
         android:textSize="40sp"
         android:padding="4dp"
@@ -30,7 +30,8 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/alarm_time"
         android:padding="4dp"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:id="@+id/linearLayout">
 
         <TextView
             android:id="@+id/alarm_repeat_sun"
