@@ -218,12 +218,20 @@ public class Alarm {
         cal.set(Calendar.SECOND, 0);
         int today = getDayOfWeek(cal.get(Calendar.DAY_OF_WEEK));
 
-        int i;
-        int yesterday = today - 1;
-        if (yesterday == -1) {
-            yesterday = 6;
+        int i, lastAlarmDay, nextAlarmDay;
+
+        if (System.currentTimeMillis() > cal.getTimeInMillis()) {
+            nextAlarmDay = today + 1;
+            lastAlarmDay = today;
+        } else {
+            nextAlarmDay = today;
+            lastAlarmDay = today - 1;
+            if (lastAlarmDay == -1) {
+                lastAlarmDay = 6;
+            }
         }
-        for (i = today; i != yesterday; i++) {
+
+        for (i = nextAlarmDay; i != lastAlarmDay; i++) {
             if(i == 7) {
                 i = 0;
                 continue;
