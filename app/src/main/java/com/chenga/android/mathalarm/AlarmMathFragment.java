@@ -267,8 +267,7 @@ public class AlarmMathFragment extends Fragment {
                 } else {
                     mp.stop();
                     vibrateRunning = false;
-                    alarm.setMinute(alarm.getMinute() + alarm.getSnooze());
-                    alarm.scheduleAlarm(getActivity());
+                    alarm.scheduleSnooze(getActivity());
                     getActivity().finish();
                 }
             }

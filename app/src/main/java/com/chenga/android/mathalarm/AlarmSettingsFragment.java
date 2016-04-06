@@ -383,39 +383,20 @@ public class AlarmSettingsFragment extends Fragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.fragment_settings_done:
-                mAlarm.setIsOn(true);
-
-                // If there is no days set, set the alarm on the closest possible date
-                if (mAlarm.getRepeat().equals("FFFFFFF")) {
-                    Calendar cal = Calendar.getInstance();
-                    int dayOfTheWeek = mAlarm.getDayOfWeek(cal.get(Calendar.DAY_OF_WEEK));
-
-                    if (mAlarm.getHour() > cal.get(Calendar.HOUR_OF_DAY) ||
-                            (mAlarm.getHour() == cal.get(Calendar.HOUR_OF_DAY) &&
-                                    (mAlarm.getMinute() > cal.get(Calendar.MINUTE)))) { //set it today
-                        StringBuilder sb = new StringBuilder("FFFFFFF");
-                        sb.setCharAt(dayOfTheWeek, 'T');
-                        mAlarm.setRepeatDays(sb.toString());
-                    } else {    //alarm time already passed for the day so set it tomorrow
-                        StringBuilder sb = new StringBuilder("FFFFFFF");
-
-                        if (dayOfTheWeek == Alarm.SAT) { //if it is saturday
-                            dayOfTheWeek = Alarm.SUN;
-                        } else {
-                            dayOfTheWeek++;
-                        }
-                        sb.setCharAt(dayOfTheWeek, 'T');
-                        mAlarm.setRepeatDays(sb.toString());
-                    }
-                }
-
+                //Setting difficulty + alarm tone
                 mAlarm.setDifficulty(mDifficultySpinner.getSelectedItemPosition());
                 if (mAlarmTones.length != 0) {
                     mAlarm.setAlarmTone(mAlarmTones[mToneSpinner
                             .getSelectedItemPosition()].toString());
                 }
 
-                //update to database
+                //schedule it and create a toast
+                if (mAlarm.scheduleAlarm(getActivity())) {
+                    Toast.makeText(getActivity(), mAlarm.getTimeLeftMessage(),
+                            Toast.LENGTH_SHORT).show();
+                }
+
+                //update to database and close settings
                 if (mAdd) {
                     AlarmLab.get(getActivity()).addAlarm(mAlarm);
                 } else {
@@ -424,10 +405,6 @@ public class AlarmSettingsFragment extends Fragment {
                     AlarmLab.get(getActivity()).updateAlarm(mAlarm);
                 }
 
-                //schedule it and close settings
-                mAlarm.scheduleAlarm(getActivity());
-                Toast.makeText(getActivity(), mAlarm.getTimeLeftMessage(),
-                        Toast.LENGTH_SHORT).show();
                 getActivity().finish();
                 return true;
             case R.id.fragment_settings_delete:

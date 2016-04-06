@@ -124,15 +124,22 @@ public class AlarmFragment extends Fragment {
                 public void onClick(View v) {
                     mSwitchButton.setChecked(!mAlarm.isOn());
                     mAlarm.setIsOn(!mAlarm.isOn());
-                    AlarmLab.get(getContext()).updateAlarm(mAlarm);
+
 
                     if (mAlarm.isOn()) {
-                        mAlarm.scheduleAlarm(getActivity());
-                        Toast.makeText(getActivity(), mAlarm.getTimeLeftMessage(),
-                                Toast.LENGTH_SHORT).show();
+                        if (mAlarm.scheduleAlarm(getActivity())) {
+                            Toast.makeText(getActivity(), mAlarm.getTimeLeftMessage(),
+                                    Toast.LENGTH_SHORT).show();
+                            updateUI();
+                        } else {
+                            mSwitchButton.setChecked(false);
+                            mAlarm.setIsOn(false);
+                        }
                     } else {
                         mAlarm.cancelAlarm(getActivity());
                     }
+
+                    AlarmLab.get(getContext()).updateAlarm(mAlarm);
                 }
             });
         }
@@ -219,7 +226,9 @@ public class AlarmFragment extends Fragment {
                         R.color.colorWhite));
             }
 
-            mSwitchButton.setChecked(mAlarm.isOn());
+            if (mAlarm.isActive()) {
+                mSwitchButton.setChecked(mAlarm.isOn());
+            }
         }
     }
 
