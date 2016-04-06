@@ -4,10 +4,11 @@ import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
 import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 import java.util.UUID;
 
 public class Alarm {
@@ -137,20 +138,15 @@ public class Alarm {
     }
 
     public boolean scheduleAlarm(Context context) {
-
-        mIsOn = true;
         Intent alarm = new Intent(context, AlarmReceiver.class);
         alarm.putExtra(ALARM_EXTRA, mId);
-        boolean returnValue = false;
+        List<PendingIntent> alarmIntent = new ArrayList<>();
+        List<Calendar> time = new ArrayList<>();
 
         // If there is no days set, set the alarm on the closest possible date
         if (mRepeatDays.equals("FFFFFFF")) {
-            Calendar cal = Calendar.getInstance();
+            Calendar cal = initCalendar();
             int dayOfTheWeek = getDayOfWeek(cal.get(Calendar.DAY_OF_WEEK));
-
-            cal.set(Calendar.HOUR_OF_DAY, mHour);
-            cal.set(Calendar.MINUTE, mMinute);
-            cal.set(Calendar.SECOND, 0);
 
             if (cal.getTimeInMillis() > System.currentTimeMillis()) { //set it today
                 StringBuilder sb = new StringBuilder("FFFFFFF");
@@ -171,13 +167,9 @@ public class Alarm {
 
         for (int i = Alarm.SUN; i <= Alarm.SAT; i++) {
             if (mRepeatDays.charAt(i) == 'T') {
-
-                Calendar cal = Calendar.getInstance();
-                cal.set(Calendar.HOUR_OF_DAY, mHour);
-                cal.set(Calendar.MINUTE, mMinute);
-                cal.set(Calendar.SECOND, 0);
-
                 int daysUntilAlarm;
+                Calendar cal = initCalendar();
+
                 int currentDay = getDayOfWeek(cal.get(Calendar.DAY_OF_WEEK));
                 if (currentDay > i ||
                         (currentDay == i && cal.getTimeInMillis() < System.currentTimeMillis())) {
@@ -202,34 +194,32 @@ public class Alarm {
                     Toast.makeText(context, "Duplicate of previous alarm detected",
                             Toast.LENGTH_SHORT).show();
 
-                    StringBuilder sb = new StringBuilder(mRepeatDays);
-                    sb.setCharAt(i, 'F');
-                    mRepeatDays = sb.toString();
-                    if (!isActive()) {
-                        mIsOn = false;
-                    }
-                    continue;
+                    return false;
                 }
 
-                PendingIntent alarmIntent = PendingIntent.getBroadcast(context, intentId, alarm,
+                PendingIntent pendingIntent = PendingIntent.getBroadcast(context, intentId, alarm,
                         PendingIntent.FLAG_CANCEL_CURRENT);
 
-                AlarmManager alarmManager = (AlarmManager) context
-                        .getSystemService(Context.ALARM_SERVICE);
-
-                if (isRepeat()) {
-                    alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(),
-                            AlarmManager.INTERVAL_DAY * 7, alarmIntent);
-                } else {
-                    alarmManager.set(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), alarmIntent);
-                }
-
-                //At least 1 alarm has been succesfully scheduled
-                returnValue = true;
+                alarmIntent.add(pendingIntent);
+                time.add(cal);
             }
         }
 
-        return returnValue;
+        for (int i = 0; i < alarmIntent.size(); i++) {
+            PendingIntent pendingIntent = alarmIntent.get(i);
+            Calendar cal = time.get(i);
+            AlarmManager alarmManager = (AlarmManager) context
+                    .getSystemService(Context.ALARM_SERVICE);
+
+            if (isRepeat()) {
+                alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(),
+                        AlarmManager.INTERVAL_DAY * 7, pendingIntent);
+            } else {
+                alarmManager.set(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), pendingIntent);
+            }
+        }
+
+        return true;
     }
 
     public void scheduleSnooze(Context context){
@@ -237,7 +227,7 @@ public class Alarm {
         alarm.putExtra(ALARM_EXTRA, mId);
 
         Calendar cal = Calendar.getInstance();
-        cal.set(Calendar.MINUTE, mMinute + mSnooze);
+        cal.add(Calendar.MINUTE, mSnooze);
 
         PendingIntent alarmIntent = PendingIntent.getBroadcast(context, 0, alarm,
                 PendingIntent.FLAG_CANCEL_CURRENT);
@@ -291,6 +281,10 @@ public class Alarm {
         if (System.currentTimeMillis() > cal.getTimeInMillis()) {
             nextAlarmDay = today + 1;
             lastAlarmDay = today;
+            if (nextAlarmDay == 7) {
+                nextAlarmDay = 0;
+            }
+
         } else {
             nextAlarmDay = today;
             lastAlarmDay = today - 1;
@@ -357,6 +351,15 @@ public class Alarm {
         }
 
         return message;
+    }
+
+    private Calendar initCalendar() {
+        Calendar cal = Calendar.getInstance();
+        cal.set(Calendar.HOUR_OF_DAY, mHour);
+        cal.set(Calendar.MINUTE, mMinute);
+        cal.set(Calendar.SECOND, 0);
+
+        return cal;
     }
 
     public int getDayOfWeek(int day) {

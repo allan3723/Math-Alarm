@@ -6,7 +6,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -17,15 +16,12 @@ import android.widget.RelativeLayout;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import java.util.Calendar;
 import java.util.List;
 
 public class AlarmFragment extends Fragment {
 
     private RecyclerView mAlarmRecyclerView;
     private AlarmAdapter mAdapter;
-    private int mAlarmIndex = -1;
 
     public static final String GET_ALARM = "GET";
 
@@ -118,35 +114,33 @@ public class AlarmFragment extends Fragment {
             mRepeatTextViewFri = (TextView) itemView.findViewById(R.id.alarm_repeat_fri);
             mRepeatTextViewSat = (TextView) itemView.findViewById(R.id.alarm_repeat_sat);
             mRepeatTextViewSun = (TextView) itemView.findViewById(R.id.alarm_repeat_sun);
+
             mSwitchButton = (Switch) itemView.findViewById(R.id.alarm_switch_button);
             mSwitchButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    mSwitchButton.setChecked(!mAlarm.isOn());
                     mAlarm.setIsOn(!mAlarm.isOn());
-
+                    mSwitchButton.setChecked(mAlarm.isOn());
 
                     if (mAlarm.isOn()) {
                         if (mAlarm.scheduleAlarm(getActivity())) {
                             Toast.makeText(getActivity(), mAlarm.getTimeLeftMessage(),
                                     Toast.LENGTH_SHORT).show();
-                            updateUI();
                         } else {
-                            mSwitchButton.setChecked(false);
                             mAlarm.setIsOn(false);
+                            mSwitchButton.setChecked(false);
                         }
                     } else {
                         mAlarm.cancelAlarm(getActivity());
                     }
 
-                    AlarmLab.get(getContext()).updateAlarm(mAlarm);
+                    AlarmLab.get(getActivity()).updateAlarm(mAlarm);
                 }
             });
         }
 
         @Override
         public void onClick(View v) {
-            mAlarmIndex = getAdapterPosition();
             Intent intent = new Intent(getContext(), AlarmSettingsActivity.class);
             intent.putExtra(GET_ALARM, mAlarm.getId().toString());
             startActivity(intent);
@@ -165,6 +159,8 @@ public class AlarmFragment extends Fragment {
                 mLayout.setBackgroundColor(ContextCompat
                         .getColor(getContext(), R.color.colorNightBlue));
             }
+
+            mSwitchButton.setChecked(mAlarm.isOn());
 
             mTimeTextView.setText(mAlarm.getFormatTime());
             int color;
@@ -226,9 +222,7 @@ public class AlarmFragment extends Fragment {
                         R.color.colorWhite));
             }
 
-            if (mAlarm.isActive()) {
-                mSwitchButton.setChecked(mAlarm.isOn());
-            }
+
         }
     }
 

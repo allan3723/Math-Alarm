@@ -321,7 +321,7 @@ public class AlarmSettingsFragment extends Fragment {
         mDifficultySpinner.setSelection(mAlarm.getDifficulty());
 
         mSnoozeText = (EditText) v.findViewById(R.id.settings_snooze_text);
-        mSnoozeText.setText(Integer.toString(mAlarm.getSnooze()));
+        mSnoozeText.setText(String.format("%d",mAlarm.getSnooze()));
         mSnoozeText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -390,18 +390,16 @@ public class AlarmSettingsFragment extends Fragment {
                             .getSelectedItemPosition()].toString());
                 }
 
-                //schedule it and create a toast
-                if (mAlarm.scheduleAlarm(getActivity())) {
-                    Toast.makeText(getActivity(), mAlarm.getTimeLeftMessage(),
-                            Toast.LENGTH_SHORT).show();
-                }
-
-                //update to database and close settings
+                //schedule alarm, update to database and close settings
                 if (mAdd) {
+                    scheduleAndMessage();
                     AlarmLab.get(getActivity()).addAlarm(mAlarm);
                 } else {
                     Alarm oldAlarm = AlarmLab.get(getActivity()).getAlarm(mAlarm.getId());
-                    oldAlarm.cancelAlarm(getActivity());
+                    if (oldAlarm.isOn()) {
+                        oldAlarm.cancelAlarm(getActivity());
+                    }
+                    scheduleAndMessage();
                     AlarmLab.get(getActivity()).updateAlarm(mAlarm);
                 }
 
@@ -411,6 +409,9 @@ public class AlarmSettingsFragment extends Fragment {
                 if (!mAdd) {
                     //if the settings was not reached by the add button,
                     //then it needs to be deleted off the database
+                    if (mAlarm.isOn()) {
+                        mAlarm.cancelAlarm(getActivity());
+                    }
                     AlarmLab.get(getActivity()).deleteAlarm(mAlarm.getId());
                 }
 
@@ -448,5 +449,16 @@ public class AlarmSettingsFragment extends Fragment {
         savedInstanceState.putInt("minute", mAlarm.getMinute());
         savedInstanceState.putString("repeat", mAlarm.getRepeat());
         savedInstanceState.putBoolean("repeatweekly", mAlarm.isRepeat());
+    }
+
+    public void scheduleAndMessage() {
+        //schedule it and create a toast
+        if (mAlarm.scheduleAlarm(getActivity())) {
+            Toast.makeText(getActivity(), mAlarm.getTimeLeftMessage(),
+                    Toast.LENGTH_SHORT).show();
+            mAlarm.setIsOn(true);
+        } else {
+            mAlarm.setIsOn(false);
+        }
     }
 }
