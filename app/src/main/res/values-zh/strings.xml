@@ -1,0 +1,67 @@
+<resources>
+    <string name="app_name">数学报警</string>
+
+    <string name="time_picker_title">设定的闹钟时间:</string>
+
+    <string name="settings_time_title">设定的闹钟时间</string>
+
+    <string name="settings_day_title">出发</string>
+
+    <string name="settings_repeat_title">重复</string>
+    <string name="settings_repeat_text">每周重复</string>
+    <string name="settings_setting_title">报警设置</string>
+    <string name="settings_vibrate_text">颤动</string>
+    <string name="settings_tone_text">闹钟铃声</string>
+    <string name="settings_snooze_text">打盹 (0 = 离)</string>
+    <string name="minutes">分钟</string>
+    <string name="settings_math_difficulty_text">数学难度</string>
+    <string name="settings_test">测试报警</string>
+
+    <string name="menu_add_alarm">添加闹钟</string>
+    <string name="menu_settings_done">固定</string>
+    <string name="menu_settings_delete">删除</string>
+
+    <string name="mon">星期一</string>
+    <string name="tue">星期二</string>
+    <string name="wed">星期三</string>
+    <string name="thu">星期四</string>
+    <string name="fri">星期五</string>
+    <string name="sat">星期六</string>
+    <string name="sun">星期日</string>
+
+    <string name="zero">0</string>
+    <string name="one">1</string>
+    <string name="two">2</string>
+    <string name="three">3</string>
+    <string name="four">4</string>
+    <string name="five">5</string>
+    <string name="six">6</string>
+    <string name="seven">7</string>
+    <string name="eight">8</string>
+    <string name="nine">9</string>
+    <string name="delete">删除</string>
+    <string name="clear">肃清</string>
+    <string name="set">解雇</string>
+    <string name="snooze">打盹</string>
+
+    <string name="snooze_off">没有允许打盹</string>
+
+    <string name="empty">匮!</string>
+    <string name="add_alarm">\n点击\n添加\n警报</string>
+
+    <string name="android_cd">安卓</string>
+    <string name="bubble_cd">会话框</string>
+    <string name="message_cd">信息</string>
+
+    <string name="alarm_duplicate_toast_text">重复检测报警</string>
+    <string name="alarm_set_begin_msg">闹钟设置为</string>
+    <string name="alarm_set_end_msg">现在起。</string>
+    <string name="alarm_minute">分钟</string>
+    <string name="alarm_minutes">分钟</string>
+    <string name="alarm_hour">小时,</string>
+    <string name="alarm_hours">小时,</string>
+    <string name="alarm_day">天,</string>
+    <string name="alarm_days">天,</string>
+    <string name="tone_not_available">报警声不可用。</string>
+
+</resources>

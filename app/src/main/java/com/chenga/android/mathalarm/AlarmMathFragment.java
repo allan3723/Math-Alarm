@@ -106,7 +106,8 @@ public class AlarmMathFragment extends Fragment {
                 e.printStackTrace();
             }
         } else {
-            Toast.makeText(getActivity(), "Alarm tone not available.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), getString(R.string.tone_not_available),
+                    Toast.LENGTH_SHORT).show();
         }
 
         //Vibrate phone

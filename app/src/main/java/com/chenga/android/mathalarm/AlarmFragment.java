@@ -21,6 +21,7 @@ import java.util.List;
 public class AlarmFragment extends Fragment {
 
     private RecyclerView mAlarmRecyclerView;
+    private RelativeLayout mEmptyView;
     private AlarmAdapter mAdapter;
 
     public static final String GET_ALARM = "GET";
@@ -42,6 +43,7 @@ public class AlarmFragment extends Fragment {
 
         mAlarmRecyclerView = (RecyclerView) v.findViewById(R.id.alarm_recycler_view);
         mAlarmRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        mEmptyView = (RelativeLayout) v.findViewById(R.id.alarm_empty_view);
 
         updateUI();
 
@@ -84,6 +86,12 @@ public class AlarmFragment extends Fragment {
             mAdapter.setAlarms(alarms);
             mAdapter.notifyDataSetChanged();
         }
+
+        if (mAdapter.getItemCount() == 0) {
+            mEmptyView.setVisibility(View.VISIBLE);
+        } else {
+            mEmptyView.setVisibility(View.GONE);
+        }
     }
 
         private class AlarmHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -124,7 +132,7 @@ public class AlarmFragment extends Fragment {
 
                     if (mAlarm.isOn()) {
                         if (mAlarm.scheduleAlarm(getActivity())) {
-                            Toast.makeText(getActivity(), mAlarm.getTimeLeftMessage(),
+                            Toast.makeText(getActivity(), mAlarm.getTimeLeftMessage(getActivity()),
                                     Toast.LENGTH_SHORT).show();
                         } else {
                             mAlarm.setIsOn(false);

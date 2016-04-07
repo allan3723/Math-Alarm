@@ -41,9 +41,27 @@
     <string name="nine">9</string>
     <string name="delete">DEL</string>
     <string name="clear">CLEAR</string>
-    <string name="set">TURN OFF</string>
+    <string name="set">DISMISS</string>
     <string name="snooze">SNOOZE</string>
 
     <string name="snooze_off">No snooze allowed</string>
+
+    <string name="empty">Empty!</string>
+    <string name="add_alarm">\nTap to\n add an\n alarm</string>
+
+    <string name="android_cd">Android</string>
+    <string name="bubble_cd">Speech Bubble</string>
+    <string name="message_cd">Message</string>
+
+    <string name="alarm_duplicate_toast_text">Duplicate alarm detected</string>
+    <string name="alarm_set_begin_msg">Alarm set for</string>
+    <string name="alarm_set_end_msg">from now.</string>
+    <string name="alarm_minute">minute</string>
+    <string name="alarm_minutes">minutes</string>
+    <string name="alarm_hour">hour,</string>
+    <string name="alarm_hours">hours,</string>
+    <string name="alarm_day">day,</string>
+    <string name="alarm_days">days,</string>
+    <string name="tone_not_available">Alarm tone not available.</string>
 
 </resources>

@@ -454,7 +454,7 @@ public class AlarmSettingsFragment extends Fragment {
     public void scheduleAndMessage() {
         //schedule it and create a toast
         if (mAlarm.scheduleAlarm(getActivity())) {
-            Toast.makeText(getActivity(), mAlarm.getTimeLeftMessage(),
+            Toast.makeText(getActivity(), mAlarm.getTimeLeftMessage(getActivity()),
                     Toast.LENGTH_SHORT).show();
             mAlarm.setIsOn(true);
         } else {

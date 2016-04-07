@@ -191,7 +191,7 @@ public class Alarm {
                 //check if a previous alarm has been set
                 if (PendingIntent.getBroadcast(context, intentId, alarm,
                         PendingIntent.FLAG_NO_CREATE) != null) {
-                    Toast.makeText(context, "Duplicate of previous alarm detected",
+                    Toast.makeText(context, context.getString(R.string.alarm_duplicate_toast_text),
                             Toast.LENGTH_SHORT).show();
 
                     return false;
@@ -238,10 +238,14 @@ public class Alarm {
         alarmManager.set(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), alarmIntent);
 
         if (mSnooze == 1) {
-            Toast.makeText(context, "Alarm set for "+mSnooze+" minute from now.",
+            Toast.makeText(context, context.getString(R.string.alarm_set_begin_msg)+" "
+                            +mSnooze+context.getString(R.string.alarm_minute)+" "+
+                            context.getString(R.string.alarm_set_end_msg),
                     Toast.LENGTH_SHORT).show();
         } else {
-            Toast.makeText(context, "Alarm set for "+mSnooze+" minutes from now.",
+            Toast.makeText(context, context.getString(R.string.alarm_set_begin_msg)+" "
+                            +mSnooze+context.getString(R.string.alarm_minutes)+" "+
+                            context.getString(R.string.alarm_set_end_msg),
                     Toast.LENGTH_SHORT).show();
         }
     }
@@ -267,7 +271,7 @@ public class Alarm {
         }
     }
 
-    public String getTimeLeftMessage() {
+    public String getTimeLeftMessage(Context context) {
         String message;
 
         Calendar cal = Calendar.getInstance();
@@ -320,33 +324,36 @@ public class Alarm {
         String mString, hString, dString;
 
         if (minutes == 1) {
-            mString = "minute";
+            mString = context.getString(R.string.alarm_minute);
         } else {
-            mString = "minutes";
+            mString = context.getString(R.string.alarm_minutes);
         }
 
         if (hours == 1) {
-            hString = "hour";
+            hString = context.getString(R.string.alarm_hour);
         } else {
-            hString = "hours";
+            hString = context.getString(R.string.alarm_hours);
         }
 
         if (days == 1) {
-            dString = "day";
+            dString = context.getString(R.string.alarm_day);
         } else {
-            dString = "days";
+            dString = context.getString(R.string.alarm_days);
         }
 
         if (days == 0) {
             if (hours == 0) {
-                message = "Alarm set for "+minutes+" "+mString+" from now.";
+                message = context.getString(R.string.alarm_set_begin_msg)+" "+minutes+" "
+                        +mString+" "+context.getString(R.string.alarm_set_end_msg);
             } else {
-                message = "Alarm set for "+hours+" "+hString+", "+
-                        minutes+" "+mString+" from now.";
+                message = context.getString(R.string.alarm_set_begin_msg)+" "
+                        +hours+" "+hString+" "+minutes+" "+mString+" "+
+                        context.getString(R.string.alarm_set_end_msg);
             }
         } else {
-            message = "Alarm set for "+days+" "+dString+", "+hours+" "+hString+", "+minutes+
-                    " "+mString+" from now.";
+            message = context.getString(R.string.alarm_set_begin_msg)+" "
+                    +days+" "+dString+" "+hours+" "+hString+" "+minutes+" "+
+                    mString+" "+context.getString(R.string.alarm_set_end_msg);
         }
 
         return message;
