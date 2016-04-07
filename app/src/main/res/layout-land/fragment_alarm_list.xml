@@ -16,7 +16,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@color/colorBlack"
-        android:visibility="visible">
+        android:visibility="gone">
 
         <ImageView
             android:id="@+id/empty_view_android"
@@ -26,20 +26,17 @@
             android:scaleType="fitCenter"
             android:contentDescription="@string/android_cd"
             android:layout_alignParentBottom="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_marginLeft="109dp"
-            android:layout_marginStart="109dp"/>
+            android:layout_centerHorizontal="true"/>
 
         <RelativeLayout
             android:id="@+id/empty_bubble_layout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:layout_alignTop="@+id/empty_view_android"
-            android:layout_above="@+id/empty_view_android">
+            android:layout_marginLeft="81dp"
+            android:layout_marginStart="81dp">
             <ImageView
                 android:id="@+id/bubble_imageview"
                 android:layout_width="200dp"
