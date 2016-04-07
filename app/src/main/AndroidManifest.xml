@@ -26,6 +26,7 @@
                   android:windowSoftInputMode="stateHidden">
         </activity>
         <activity android:name=".AlarmMathActivity"
+                  android:excludeFromRecents="true"
                   android:configChanges="orientation|screenSize">
         </activity>
         <service
