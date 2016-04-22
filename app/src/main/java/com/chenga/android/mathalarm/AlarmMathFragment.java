@@ -1,5 +1,10 @@
 package com.chenga.android.mathalarm;
 
+/*
+* The fragment that gets called when the alarm goes off
+* Displays the math question, plays the alarm tone and any other set functions
+ */
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -277,6 +282,7 @@ public class AlarmMathFragment extends Fragment {
         return v;
     }
 
+    //Creates the math problem based on the user-set difficulty
     private void getMathProblem(int difficulty) {
         Random random = new Random();
 

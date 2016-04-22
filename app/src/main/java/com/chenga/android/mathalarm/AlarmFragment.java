@@ -1,5 +1,10 @@
 package com.chenga.android.mathalarm;
 
+/*
+*   This class is the fragment of the main activity. Contains the list of alarm.
+*   This initializes the RecyclerView, its adapter and the layout buttons
+ */
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -36,6 +41,7 @@ public class AlarmFragment extends Fragment {
         setHasOptionsMenu(true);
     }
 
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
@@ -75,6 +81,8 @@ public class AlarmFragment extends Fragment {
         updateUI();
     }
 
+    // UpdateUI is called when the program returns to this fragment
+    // Used to update the alarm information on the UI
     public void updateUI() {
         AlarmLab alarmLab = AlarmLab.get(getActivity());
         List<Alarm> alarms = alarmLab.getAlarms();
@@ -94,6 +102,7 @@ public class AlarmFragment extends Fragment {
         }
     }
 
+        //Setting the RecyclerView's ViewHolder and Adapter
         private class AlarmHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         private Alarm mAlarm;

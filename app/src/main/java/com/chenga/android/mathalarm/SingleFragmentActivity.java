@@ -1,5 +1,10 @@
 package com.chenga.android.mathalarm;
 
+/*
+* Template for all activities. Creates and attaches the fragment to the activity
+* extending this activity.
+ */
+
 import android.os.Bundle;
 import android.support.annotation.LayoutRes;
 import android.support.v4.app.Fragment;

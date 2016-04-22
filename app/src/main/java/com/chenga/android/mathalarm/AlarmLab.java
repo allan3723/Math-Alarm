@@ -1,5 +1,9 @@
 package com.chenga.android.mathalarm;
 
+/*
+* Singleton class the holds the database of the alarm.
+* It does the database querying, updating, and deleting
+ */
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;

@@ -1,5 +1,11 @@
 package com.chenga.android.mathalarm;
 
+/*
+* This is the fragment that contains the settings UI of the program.
+* Called when the add('+') button is pressed or when an existing alarm
+* is pressed.
+ */
+
 import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
@@ -27,6 +33,7 @@ import android.widget.ToggleButton;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 import java.util.UUID;
 
 public class AlarmSettingsFragment extends Fragment {
@@ -71,6 +78,7 @@ public class AlarmSettingsFragment extends Fragment {
         setHasOptionsMenu(true);
     }
 
+    //Creates view and initializes button
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent,
                              Bundle savedInstanceState) {
@@ -321,7 +329,7 @@ public class AlarmSettingsFragment extends Fragment {
         mDifficultySpinner.setSelection(mAlarm.getDifficulty());
 
         mSnoozeText = (EditText) v.findViewById(R.id.settings_snooze_text);
-        mSnoozeText.setText(String.format("%d",mAlarm.getSnooze()));
+        mSnoozeText.setText(String.format(Locale.US, "%d",mAlarm.getSnooze()));
         mSnoozeText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -379,6 +387,7 @@ public class AlarmSettingsFragment extends Fragment {
         inflater.inflate(R.menu.alarm_settings_menu, menu);
     }
 
+    //Setting the on click action of delete and done on action bar
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {

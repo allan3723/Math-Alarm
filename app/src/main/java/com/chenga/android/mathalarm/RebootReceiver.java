@@ -1,5 +1,11 @@
 package com.chenga.android.mathalarm;
 
+/*
+* The receiver the receives the boot completed intent when a device successfully boots up.
+* Reschedules all enabled alarm since AlarmManager does not retain alarms after a device
+* turns off.
+ */
+
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;

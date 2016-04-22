@@ -1,17 +1,11 @@
 package com.chenga.android.mathalarm;
 
+/*
+* Gets called by wakefulbroadcastreceiver and completes the wakelock.
+* This class in turn calls the math activity.
+ */
 import android.app.IntentService;
-import android.content.Context;
 import android.content.Intent;
-import android.media.AudioManager;
-import android.media.MediaPlayer;
-import android.media.RingtoneManager;
-import android.net.Uri;
-import android.os.SystemClock;
-import android.os.Vibrator;
-import android.util.Log;
-
-import java.io.IOException;
 import java.util.UUID;
 
 public class AlarmService extends IntentService {

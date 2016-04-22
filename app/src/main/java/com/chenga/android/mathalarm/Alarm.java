@@ -1,5 +1,11 @@
 package com.chenga.android.mathalarm;
 
+/*
+* Object class for alarm. Holds all the information of the alarm
+* Also schedules the alarm, obtain formatted dates, display the toast for the
+* time remaining until alarm.
+ */
+
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
@@ -129,6 +135,7 @@ public class Alarm {
         mSnooze = snooze;
     }
 
+    //Get the formatted time (example: 12:00 AM)
     public CharSequence getFormatTime() {
         Calendar cal = Calendar.getInstance();
         cal.set(Calendar.HOUR_OF_DAY, mHour);
@@ -137,6 +144,7 @@ public class Alarm {
         return android.text.format.DateFormat.format("hh:mm a", cal);
     }
 
+    //Schedules all the alarm of the object at once including repeating ones
     public boolean scheduleAlarm(Context context) {
         Intent alarm = new Intent(context, AlarmReceiver.class);
         alarm.putExtra(ALARM_EXTRA, mId);
@@ -222,6 +230,7 @@ public class Alarm {
         return true;
     }
 
+    //This gets called if snooze get pressed
     public void scheduleSnooze(Context context){
         Intent alarm = new Intent(context, AlarmReceiver.class);
         alarm.putExtra(ALARM_EXTRA, mId);
@@ -250,6 +259,7 @@ public class Alarm {
         }
     }
 
+    //Cancels an alarm - Called when an alarm is turned off, deleted, and rescheduled
     public void cancelAlarm(Context context) {
         Intent cancel = new Intent(context, AlarmReceiver.class);
 
@@ -271,6 +281,7 @@ public class Alarm {
         }
     }
 
+    //Used for displaying the toast for the the remaining time until the next alarm
     public String getTimeLeftMessage(Context context) {
         String message;
 
