@@ -98,7 +98,7 @@ public class AlarmMathFragment extends Fragment {
 
 
         //Play alarm tone
-        if (alarm.getAlarmTone() != null) {
+        if (!alarm.getAlarmTone().isEmpty()) {
             Uri alarmUri = Uri.parse(alarm.getAlarmTone());
 
             try {

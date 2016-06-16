@@ -275,6 +275,7 @@ public class AlarmSettingsFragment extends Fragment {
         });
 
 
+        //Getting system sound files for tone and displaying in spinner
         mToneSpinner = (Spinner) v.findViewById(R.id.settings_tone_spinner);
         List<String> toneItems = new ArrayList<>();
         RingtoneManager ringtoneMgr = new RingtoneManager(getActivity());
@@ -298,21 +299,30 @@ public class AlarmSettingsFragment extends Fragment {
             Toast.makeText(getActivity(), "No sound files available", Toast.LENGTH_SHORT).show();
         }
 
-        mAlarmTones = new Uri[alarmsCount];
-
         int previousPosition = 0;
-        String currentTone = mAlarm.getAlarmTone();
 
-        while(!alarmsCursor.isAfterLast() && alarmsCursor.moveToNext()) {
-            int currentPosition = alarmsCursor.getPosition();
-            mAlarmTones[currentPosition] = ringtoneMgr.getRingtoneUri(currentPosition);
-            toneItems.add(ringtoneMgr.getRingtone(currentPosition)
-                    .getTitle(getActivity()));
+        //If there are sound files, add them
+        if (alarmsCount != 0) {
+            mAlarmTones = new Uri[alarmsCount];
 
-            if (currentTone != null &&
-                    currentTone.equals(mAlarmTones[currentPosition].toString())) {
-                previousPosition = currentPosition;
+            String currentTone = mAlarm.getAlarmTone();
+
+            while (!alarmsCursor.isAfterLast() && alarmsCursor.moveToNext()) {
+                int currentPosition = alarmsCursor.getPosition();
+                mAlarmTones[currentPosition] = ringtoneMgr.getRingtoneUri(currentPosition);
+                toneItems.add(ringtoneMgr.getRingtone(currentPosition)
+                        .getTitle(getActivity()));
+
+                if (currentTone != null &&
+                        currentTone.equals(mAlarmTones[currentPosition].toString())) {
+                    previousPosition = currentPosition;
+                }
             }
+
+        }
+
+        if (toneItems.isEmpty()) {
+            toneItems.add("Empty");
         }
 
 
